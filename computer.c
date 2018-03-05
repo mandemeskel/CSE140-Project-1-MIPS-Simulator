@@ -191,7 +191,17 @@ unsigned int Fetch ( int addr) {
 
 /* Decode instr, returning decoded instruction. */
 void Decode ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
-    /* Your code goes here */
+    logInstr("Decode()", instr);
+
+    d->op = findOpcode(instr);
+    d->type = findInstructionType(d->op);
+
+    if (d->type == R) 
+        decodeRFormat(instr, d, rVals);
+    else if (d->type == I) 
+        decodeIFormat(instr, d, rVals);
+    else 
+        decodeJFormat(instr, d, rVals);
 }
 
 const unsigned int OPCODE_AND_OP = 0b11111100000000000000000000000000;
