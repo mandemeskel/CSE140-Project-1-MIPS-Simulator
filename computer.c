@@ -229,10 +229,45 @@ InstrType findInstructionType ( unsigned short opcode) {
     return I;
 }
 
+const unsigned int RS_AND_OP = 0b00000011111000000000000000000000;
+const unsigned int RT_AND_OP = 0b00000000000111110000000000000000;
+const unsigned int RD_AND_OP = 0b00000000000000001111100000000000;
+const unsigned int SH_AND_OP = 0b00000000000000000000011111000000;
+const unsigned int FN_AND_OP = 0b00000000000000000000000000111111;
+const short RS_BIT_START_LOCATION = 21;
+const short RT_BIT_START_LOCATION = 16;
+const short RD_BIT_START_LOCATION = 11;
+const short SH_BIT_START_LOCATION = 6;
 /* Decodes R format intructions. */
 void decodeRFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
+    logInstr("decodeRFormat()", instr);
     assert(d->type == R);
 
+    unsigned short rs = instr & RS_AND_OP;
+    rs = rs >> RS_BIT_START_LOCATION;
+
+    unsigned short rt = instr & RT_AND_OP;
+    rt = rt >> RT_BIT_START_LOCATION;
+    
+    unsigned short rd = instr & RD_AND_OP;
+    rd = rd >> RD_BIT_START_LOCATION;
+
+    unsigned short shamt = instr & SH_AND_OP;
+    shamt = shamt >> SH_BIT_START_LOCATION;
+
+    unsigned short funct = instr & FN_AND_OP;
+
+    d->regs.r.rs = rs;
+    d->regs.r.rt = rt;
+    d->regs.r.rd = rd;
+    d->regs.r.shamt = shamt;
+    d->regs.r.funct = funct;
+
+    rVals->R_rs = mips.registers[rs];
+    rVals->R_rt = mips.registers[rt];
+    rVals->R_rd = mips.registers[rd];
+
+    logDecodedInstr(d);
 }
 
 /* Decodes I format intructions. */
