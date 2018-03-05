@@ -7,6 +7,7 @@
 #define FALSE 0
 
 void testDecode();
+void testInstructionDecode(unsigned int, DecodedInstr, RegVals);
 void assertTrue(int, int, char *);
 void printLine(char *);
 
@@ -22,9 +23,12 @@ void testDecode() {
     printLine("Running decode tests.");
 
     unsigned int instr_jr = 0x03e00008;
-    DecodedInstr actual;
-    RegVals rVals;
-    DecodedInstr expected = {
+    RegVals expectedRegVals = {
+        .R_rs = 0x04101023,
+        .R_rt = 0,
+        .R_rd = 0
+    };
+    DecodedInstr expectedD = {
         .type = R,
         .op = 0,
         .regs.r.rs = 31,
@@ -34,17 +38,29 @@ void testDecode() {
         .regs.r.funct = 8                        
     };
 
-    Decode(instr_jr, &actual, &rVals);
-
-    assertTrue(expected.type, actual.type, "wrong instruction type");
-    assertTrue(expected.op, actual.op, "wrong opcode");
-    assertTrue(expected.regs.r.rs, actual.regs.r.rs, "wrong rs");
-    assertTrue(expected.regs.r.rt, actual.regs.r.rt, "wrong rt");
-    assertTrue(expected.regs.r.rd, actual.regs.r.rd, "wrong rd");
-    assertTrue(expected.regs.r.shamt, actual.regs.r.shamt, "wrong shamt");
-    assertTrue(expected.regs.r.funct, actual.regs.r.funct, "wrong funct");
+    mips.registers[31] = expectedRegVals.R_rs;
+    testInstructionDecode(instr_jr, expectedD, expectedRegVals);
 
     printLine("Decode tests passed.");
+}
+
+void testInstructionDecode(unsigned int instruction, DecodedInstr expectedD, RegVals expectedRegVals) {
+    DecodedInstr actualD;
+    RegVals rVals;
+
+    Decode(instruction, &actualD, &rVals);
+
+    assertTrue(expectedD.type, actualD.type, "wrong instruction type");
+    assertTrue(expectedD.op, actualD.op, "wrong opcode");
+    assertTrue(expectedD.regs.r.rs, actualD.regs.r.rs, "wrong rs");
+    assertTrue(expectedD.regs.r.rt, actualD.regs.r.rt, "wrong rt");
+    assertTrue(expectedD.regs.r.rd, actualD.regs.r.rd, "wrong rd");
+    assertTrue(expectedD.regs.r.shamt, actualD.regs.r.shamt, "wrong shamt");
+    assertTrue(expectedD.regs.r.funct, actualD.regs.r.funct, "wrong funct");
+
+    assertTrue(expectedRegVals.R_rs, rVals.R_rs, "wrong rs value");
+    assertTrue(expectedRegVals.R_rt, rVals.R_rt, "wrong rt value");
+    assertTrue(expectedRegVals.R_rd, rVals.R_rd, "wrong rd value");
 }
 
 void assertTrue(int expected, int actual, char * msg) {
