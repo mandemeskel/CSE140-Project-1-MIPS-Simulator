@@ -15,6 +15,7 @@ unsigned short findOpcode(unsigned int);
 InstrType findInstructionType(unsigned short);
 void decodeRFormat(unsigned int, DecodedInstr*, RegVals*);
 void decodeIFormat(unsigned int, DecodedInstr*, RegVals*);
+int signExtendImmediate(int);
 void decodeJFormat(unsigned int, DecodedInstr*, RegVals*);
 
 int Execute (DecodedInstr*, RegVals*);
@@ -270,10 +271,43 @@ void decodeRFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     logDecodedInstr(d);
 }
 
+const unsigned int IMM_AND_OP = 0b00000000000000001111111111111111;
 /* Decodes I format intructions. */
 void decodeIFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
+    logInstr("decodeIFormat()", instr);
     assert(d->type == I);
 
+    unsigned short rs = instr & RS_AND_OP;
+    rs = rs >> RS_BIT_START_LOCATION;
+
+    unsigned short rt = instr & RT_AND_OP;
+    rt = rt >> RT_BIT_START_LOCATION;
+    
+    int imm = instr & IMM_AND_OP;
+    imm = signExtendImmediate(imm);
+
+    d->regs.i.rs = rs;
+    d->regs.i.rt = rt;
+    d->regs.i.addr_or_immed = imm;
+
+    rVals->R_rs = mips.registers[rs];
+    rVals->R_rt = mips.registers[rt];
+
+    logDecodedInstr(d);
+}
+
+const unsigned int IMM_LAST_BIT_LOCATION = 15;
+const unsigned int IMM_SIGN_EXTENDER = 0b11111111111111110000000000000000;
+/* Sign extend an immediate for an I format instruction. */
+int signExtendImmediate(int imm) {
+    logInstr("signExtendImmediate()", imm);
+    assert(imm <= 65535); // highest number a 16 bit immediate could be
+
+    unsigned short lastBit = imm >> IMM_LAST_BIT_LOCATION;
+
+    if(lastBit == 0) return imm;
+
+    return imm | IMM_SIGN_EXTENDER;
 }
 
 const unsigned int TARGET_AND_OP = 0b00000011111111111111111111111111;
