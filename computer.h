@@ -1,6 +1,7 @@
 
 #define MAXNUMINSTRS 1024	/* max # instrs in a program */
 #define MAXNUMDATA 3072		/* max # data words */
+#undef mips			/* gcc already has a def for mips */
 
 struct SimulatedComputer {
     int memory [MAXNUMINSTRS+MAXNUMDATA];
@@ -73,3 +74,7 @@ void PrintInstruction (DecodedInstr*);
 void logMsg(char *);
 void logInstr(char *, unsigned int);
 void logDecodedInstr(DecodedInstr*);
+
+/*Globally accessible Computer variable*/
+Computer mips;
+RegVals rVals;

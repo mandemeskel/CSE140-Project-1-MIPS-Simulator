@@ -3,11 +3,6 @@
 #include <netinet/in.h>
 #include <assert.h>
 #include "computer.h"
-#undef mips			/* gcc already has a def for mips */
-
-/*Globally accessible Computer variable*/
-Computer mips;
-RegVals rVals;
 
 /*
  *  Return an initialized computer with the stack pointer set to the
