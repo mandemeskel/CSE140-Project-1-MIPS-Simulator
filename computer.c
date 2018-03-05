@@ -317,7 +317,11 @@ void decodeJFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     assert(d->type == J);
 
     int target = instr & TARGET_AND_OP;
-    target = signExtendAddress(target);
+    target = target << 2;
+
+    int four_most_bits = mips.pc >> 30;
+    four_most_bits = four_most_bits << 30;
+    target = target | four_most_bits;
 
     d->regs.j.target = target;
 
@@ -425,7 +429,7 @@ void logDecodedInstr(DecodedInstr* d) {
     } else {
 
         printf("J format \n");
-        printf("target: %d \n", d->regs.j.target);
+        printf("target: %8.8x \n", d->regs.j.target);
 
     }
 }
