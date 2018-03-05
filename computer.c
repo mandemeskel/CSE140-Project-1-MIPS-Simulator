@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <netinet/in.h>
+#include <assert.h>
 #include "computer.h"
 #undef mips			/* gcc already has a def for mips */
 
@@ -181,6 +182,15 @@ unsigned int Fetch ( int addr) {
 /* Decode instr, returning decoded instruction. */
 void Decode ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     /* Your code goes here */
+}
+
+const unsigned int OPCODE_AND_OP = 0b11111100000000000000000000000000;
+const unsigned short OPCODE_BIT_START_LOCATION = 26;
+/* Returns the opcode of the instruction. */
+unsigned short findOpcode ( unsigned int instr) {
+    unsigned short opcode = instr & OPCODE_AND_OP;
+    opcode = opcode >> OPCODE_BIT_START_LOCATION;
+    return opcode;
 }
 
 /* Returns the instruction type base on the opcode. */
