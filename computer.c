@@ -183,6 +183,16 @@ void Decode ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     /* Your code goes here */
 }
 
+/* Returns the instruction type base on the opcode. */
+InstrType findInstructionType ( unsigned short opcode) {
+    // the highest opcode we should get is 43 for sw
+    assert(opcode <= 43);
+
+    if (opcode == 0) return R;
+    if (opcode <= 5) return J;
+    return I;
+}
+
 /* Decodes R format intructions. */
 void decodeRFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     assert(d->type == R);
