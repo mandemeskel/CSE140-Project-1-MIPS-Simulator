@@ -397,7 +397,7 @@ void logMsg ( char * msg) {
 /* Print out debug messages with instruction. */
 void logInstr (char * msg, unsigned int instr) {
     if(DEBUGGGING == 0) return;
-    printf("%s: %u \n", msg, instr);
+    printf("%s: %8.8x \n", msg, instr);
 }
 
 /* Print out the contents of DecodedInstr. */
