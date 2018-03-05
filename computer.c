@@ -183,6 +183,24 @@ void Decode ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     /* Your code goes here */
 }
 
+/* Decodes R format intructions. */
+void decodeRFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
+    assert(d->type == R);
+
+}
+
+/* Decodes I format intructions. */
+void decodeIFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
+    assert(d->type == I);
+
+}
+
+/* Decodes J format intructions. */
+void decodeJFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
+    assert(d->type == J);
+
+}
+
 /*
  *  Print the disassembled version of the given instruction
  *  followed by a newline.
