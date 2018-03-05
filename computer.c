@@ -9,12 +9,20 @@ unsigned int endianSwap(unsigned int);
 
 void PrintInfo (int changedReg, int changedMem);
 unsigned int Fetch (int);
+
 void Decode (unsigned int, DecodedInstr*, RegVals*);
+unsigned short findOpcode(unsigned int);
+InstrType findInstructionType(unsigned short);
+void decodeRFormat(unsigned int, DecodedInstr*, RegVals*);
+void decodeIFormat(unsigned int, DecodedInstr*, RegVals*);
+void decodeJFormat(unsigned int, DecodedInstr*, RegVals*);
+
 int Execute (DecodedInstr*, RegVals*);
 int Mem(DecodedInstr*, int, int *);
 void RegWrite(DecodedInstr*, int, int *);
 void UpdatePC(DecodedInstr*, int);
 void PrintInstruction (DecodedInstr*);
+
 void logMsg(char *);
 void logInstr(char *, unsigned int);
 
