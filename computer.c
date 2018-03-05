@@ -391,41 +391,41 @@ const int DEBUGGGING = 1;
 /* Print out debug messages to terminal. */
 void logMsg ( char * msg) {
     if(DEBUGGGING == 0) return;
-    printf("%s", msg);
+    printf("%s \n", msg);
 }
 
 /* Print out debug messages with instruction. */
 void logInstr (char * msg, unsigned int instr) {
     if(DEBUGGGING == 0) return;
-    printf("%s: %u", msg, instr);
+    printf("%s: %u \n", msg, instr);
 }
 
 /* Print out the contents of DecodedInstr. */
 void logDecodedInstr(DecodedInstr* d) {
     if(DEBUGGGING == 0) return;
-    printf("instruction type: %d", d->type);
-    printf("op code: %d", d->op);
+    printf("instruction type: %d \n", d->type);
+    printf("op code: %d \n", d->op);
     
     if(d->type == R) {
 
-        printf("R format");
-        printf("rs: %d", d->regs.r.rs);
-        printf("rt: %d", d->regs.r.rt);
-        printf("rd: %d", d->regs.r.rd);
-        printf("shamt: %d", d->regs.r.shamt);
-        printf("funct: %d", d->regs.r.funct);
+        printf("R format \n");
+        printf("rs: %d \n", d->regs.r.rs);
+        printf("rt: %d \n", d->regs.r.rt);
+        printf("rd: %d \n", d->regs.r.rd);
+        printf("shamt: %d \n", d->regs.r.shamt);
+        printf("funct: %d \n", d->regs.r.funct);
 
     } else if(d->type == I) {
 
-        printf("I format");
-        printf("rs: %d", d->regs.i.rs);
-        printf("rt: %d", d->regs.i.rt);
-        printf("address or immediate: %d", d->regs.i.addr_or_immed);
+        printf("I format \n");
+        printf("rs: %d \n", d->regs.i.rs);
+        printf("rt: %d \n", d->regs.i.rt);
+        printf("address or immediate: %d \n", d->regs.i.addr_or_immed);
 
     } else {
 
-        printf("J format");
-        printf("target: %d", d->regs.j.target);
+        printf("J format \n");
+        printf("target: %d \n", d->regs.j.target);
 
     }
 }
