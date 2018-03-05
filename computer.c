@@ -25,6 +25,7 @@ void PrintInstruction (DecodedInstr*);
 
 void logMsg(char *);
 void logInstr(char *, unsigned int);
+void logDecodedInstr(DecodedInstr*);
 
 /*Globally accessible Computer variable*/
 Computer mips;
@@ -202,6 +203,8 @@ void Decode ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
         decodeIFormat(instr, d, rVals);
     else 
         decodeJFormat(instr, d, rVals);
+    
+    logDecodedInstr(d);
 }
 
 const unsigned int OPCODE_AND_OP = 0b11111100000000000000000000000000;
@@ -304,4 +307,34 @@ void logMsg ( char * msg) {
 void logInstr (char * msg, unsigned int instr) {
     if(DEBUGGGING == 0) return;
     printf("%s: %u", msg, instr);
+}
+
+/* Print out the contents of DecodedInstr. */
+void logDecodedInstr(DecodedInstr* d) {
+    if(DEBUGGGING == 0) return;
+    printf("instruction type: %d", d->type);
+    printf("op code: %d", d->op);
+    
+    if(d->type == R) {
+
+        printf("R format");
+        printf("rs: %d", d->regs.r.rs);
+        printf("rt: %d", d->regs.r.rt);
+        printf("rd: %d", d->regs.r.rd);
+        printf("shamt: %d", d->regs.r.shamt);
+        printf("funct: %d", d->regs.r.funct);
+
+    } else if(d->type == I) {
+
+        printf("I format");
+        printf("rs: %d", d->regs.i.rs);
+        printf("rt: %d", d->regs.i.rt);
+        printf("address or immediate: %d", d->regs.i.addr_or_immed);
+
+    } else {
+
+        printf("J format");
+        printf("target: %d", d->regs.j.target);
+
+    }
 }
