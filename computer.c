@@ -225,7 +225,7 @@ InstrType findInstructionType ( unsigned short opcode) {
     assert(opcode <= 43);
 
     if (opcode == 0) return R;
-    if (opcode <= 5) return J;
+    if (opcode == 2 || opcode == 3) return J;
     return I;
 }
 
@@ -245,7 +245,7 @@ const unsigned int TARGET_AND_OP = 0b00000011111111111111111111111111;
 /* Decodes J format intructions. */
 void decodeJFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     assert(d->type == J);
-    
+
     unsigned int target = instr & TARGET_AND_OP;
     d->regs.j.target = target;
 }
