@@ -15,6 +15,8 @@ int Mem(DecodedInstr*, int, int *);
 void RegWrite(DecodedInstr*, int, int *);
 void UpdatePC(DecodedInstr*, int);
 void PrintInstruction (DecodedInstr*);
+void logMsg(char *);
+void logInstr(char *, unsigned int);
 
 /*Globally accessible Computer variable*/
 Computer mips;
@@ -188,6 +190,8 @@ const unsigned int OPCODE_AND_OP = 0b11111100000000000000000000000000;
 const unsigned short OPCODE_BIT_START_LOCATION = 26;
 /* Returns the opcode of the instruction. */
 unsigned short findOpcode ( unsigned int instr) {
+    logInstr("findOpcode()", instr);
+
     unsigned short opcode = instr & OPCODE_AND_OP;
     opcode = opcode >> OPCODE_BIT_START_LOCATION;
     return opcode;
@@ -195,6 +199,7 @@ unsigned short findOpcode ( unsigned int instr) {
 
 /* Returns the instruction type base on the opcode. */
 InstrType findInstructionType ( unsigned short opcode) {
+    logInstr("findInstructionType()", opcode);
     // the highest opcode we should get is 43 for sw
     assert(opcode <= 43);
 
@@ -268,4 +273,17 @@ int Mem( DecodedInstr* d, int val, int *changedMem) {
  */
 void RegWrite( DecodedInstr* d, int val, int *changedReg) {
     /* Your code goes here */
+}
+
+const int DEBUGGGING = 1;
+/* Print out debug messages to terminal. */
+void logMsg ( char * msg) {
+    if(DEBUGGGING == 0) return;
+    printf("%s", msg);
+}
+
+/* Print out debug messages with instruction. */
+void logInstr (char * msg, unsigned int instr) {
+    if(DEBUGGGING == 0) return;
+    printf("%s: %u", msg, instr);
 }
