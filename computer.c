@@ -215,7 +215,7 @@ const unsigned short OPCODE_BIT_START_LOCATION = 26;
 unsigned short findOpcode ( unsigned int instr) {
     logInstr("findOpcode()", instr);
 
-    unsigned short opcode = instr & OPCODE_AND_OP;
+    unsigned int opcode = instr & OPCODE_AND_OP;
     opcode = opcode >> OPCODE_BIT_START_LOCATION;
     return opcode;
 }
@@ -245,19 +245,19 @@ void decodeRFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     logInstr("decodeRFormat()", instr);
     assert(d->type == R);
 
-    unsigned short rs = instr & RS_AND_OP;
+    unsigned int rs = instr & RS_AND_OP;
     rs = rs >> RS_BIT_START_LOCATION;
 
-    unsigned short rt = instr & RT_AND_OP;
+    unsigned int rt = instr & RT_AND_OP;
     rt = rt >> RT_BIT_START_LOCATION;
     
-    unsigned short rd = instr & RD_AND_OP;
+    unsigned int rd = instr & RD_AND_OP;
     rd = rd >> RD_BIT_START_LOCATION;
 
-    unsigned short shamt = instr & SH_AND_OP;
+    unsigned int shamt = instr & SH_AND_OP;
     shamt = shamt >> SH_BIT_START_LOCATION;
 
-    unsigned short funct = instr & FN_AND_OP;
+    unsigned int funct = instr & FN_AND_OP;
 
     d->regs.r.rs = rs;
     d->regs.r.rt = rt;
@@ -278,10 +278,10 @@ void decodeIFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     logInstr("decodeIFormat()", instr);
     assert(d->type == I);
 
-    unsigned short rs = instr & RS_AND_OP;
+    unsigned int rs = instr & RS_AND_OP;
     rs = rs >> RS_BIT_START_LOCATION;
 
-    unsigned short rt = instr & RT_AND_OP;
+    unsigned int rt = instr & RT_AND_OP;
     rt = rt >> RT_BIT_START_LOCATION;
     
     int imm = instr & IMM_AND_OP;
