@@ -17,6 +17,7 @@ void decodeRFormat(unsigned int, DecodedInstr*, RegVals*);
 void decodeIFormat(unsigned int, DecodedInstr*, RegVals*);
 int signExtendImmediate(int);
 void decodeJFormat(unsigned int, DecodedInstr*, RegVals*);
+int signExtendAddress(int address);
 
 int Execute (DecodedInstr*, RegVals*);
 int Mem(DecodedInstr*, int, int *);
@@ -315,8 +316,26 @@ const unsigned int TARGET_AND_OP = 0b00000011111111111111111111111111;
 void decodeJFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     assert(d->type == J);
 
-    unsigned int target = instr & TARGET_AND_OP;
+    int target = instr & TARGET_AND_OP;
+    target = signExtendAddress(target);
+
     d->regs.j.target = target;
+
+    logDecodedInstr(d);
+}
+
+const unsigned int ADDRESS_LAST_BIT_LOCATION = 25;
+const unsigned int ADDRESS_SIGN_EXTENDER = 0b11111110000000000000000000000000;
+/* Sign extend an address for an J format instruction. */
+int signExtendAddress ( int address) {
+    logInstr("signExtendAddress()", address);
+    assert(address <= 33554431); // highest number a 16 bit address could be
+
+    unsigned short lastBit = address >> ADDRESS_LAST_BIT_LOCATION;
+
+    if(lastBit == 0) return address;
+
+    return address | ADDRESS_SIGN_EXTENDER;
 }
 
 /*
