@@ -59,7 +59,6 @@ unsigned int Fetch (int);
 void Decode (unsigned int, DecodedInstr*, RegVals*);
 unsigned short findOpcode(unsigned int);
 InstrType findInstructionType(unsigned short);
-void validateInstruction(int);
 void decodeRFormat(unsigned int, DecodedInstr*, RegVals*);
 void decodeIFormat(unsigned int, DecodedInstr*, RegVals*);
 int signExtendImmediate(int);
