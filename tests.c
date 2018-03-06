@@ -11,6 +11,8 @@ void testDecodeOnJR();
 void testDecodeOnBeq();
 void testDecodeOnAddiu();
 void testDecodeOnJal();
+void testDecodeOnXor();
+void testDecodeOnSb();
 void testInstructionDecode(unsigned int, DecodedInstr, RegVals);
 void assertTrue(int, int, char *);
 void printLine(char *);
@@ -30,6 +32,8 @@ void testDecode() {
     testDecodeOnBeq();
     testDecodeOnAddiu();
     testDecodeOnJal();
+    // testDecodeOnXor(); // program exists on successfull test
+    // testDecodeOnSb(); // program exists on successfull test
 
     printLine("Decode tests passed.");
 }
@@ -122,6 +126,52 @@ void testDecodeOnJal() {
     };
 
     mips.pc = 0x00400008;
+    testInstructionDecode(instr, expectedD, expectedRegVals);
+
+    printLine("passed");
+}
+
+void testDecodeOnXor() {
+    printf("testing on xor t1, t2, t3...");
+
+    unsigned int instr = 0x14B4826;
+    RegVals expectedRegVals = {
+        .R_rs = 0,
+        .R_rt = 0,
+        .R_rd = 0
+    };
+    DecodedInstr expectedD = {
+        .type = R,
+        .op = 0,
+        .regs.r.rs = 9,
+        .regs.r.rt = 10,
+        .regs.r.rd = 11,
+        .regs.r.shamt = 0,
+        .regs.r.funct = 38                        
+    };
+
+    testInstructionDecode(instr, expectedD, expectedRegVals);
+
+    printLine("passed");
+}
+
+void testDecodeOnSb() {
+    printf("testing on sb t3 18470(t2)");
+
+    unsigned int instr = 0xA14B4826;
+    RegVals expectedRegVals = {
+        .R_rs = 0,
+        .R_rt = 0,
+        .R_rd = 0
+    };
+    DecodedInstr expectedD = {
+        .type = I,
+        .op = 0x9,
+        .regs.i.rs = 11,
+        .regs.i.rt = 10,
+        .regs.i.addr_or_immed = 18470                    
+    };
+
     testInstructionDecode(instr, expectedD, expectedRegVals);
 
     printLine("passed");
