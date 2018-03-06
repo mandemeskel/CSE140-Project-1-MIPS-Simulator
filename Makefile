@@ -1,8 +1,8 @@
-tests : computer.o tests.o
-	gcc -g -Wall -o tests tests.o computer.o
+testDecode : computer.o testDecode.o
+	gcc -g -Wall -o testDecode testDecode.o computer.o
 
-tests.o : computer.h tests.c
-	gcc -g -c -Wall tests.c
+testDecode.o : computer.h testDecode.c
+	gcc -g -c -Wall testDecode.c
 
 sim : computer.o sim.o
 	gcc -g -Wall -o sim sim.o computer.o
