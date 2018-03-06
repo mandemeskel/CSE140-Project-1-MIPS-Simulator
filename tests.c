@@ -74,6 +74,7 @@ void testDecodeOnBeq() {
         .regs.i.addr_or_immed = 0x00400024                      
     };
 
+    mips.pc = 0x00400014;
     mips.registers[4] = expectedRegVals.R_rs;
     testInstructionDecode(instr, expectedD, expectedRegVals);
 
