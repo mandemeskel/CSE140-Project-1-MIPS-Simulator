@@ -10,6 +10,7 @@ void testDecode();
 void testDecodeOnJR();
 void testDecodeOnBeq();
 void testDecodeOnAddiu();
+void testDecodeOnJal();
 void testInstructionDecode(unsigned int, DecodedInstr, RegVals);
 void assertTrue(int, int, char *);
 void printLine(char *);
@@ -28,6 +29,7 @@ void testDecode() {
     testDecodeOnJR();
     testDecodeOnBeq();
     testDecodeOnAddiu();
+    testDecodeOnJal();
 
     printLine("Decode tests passed.");
 }
@@ -104,10 +106,36 @@ void testDecodeOnAddiu() {
     printLine("passed");
 }
 
+void testDecodeOnJal() {
+    printf("testing on jal 0x00400010...");
+
+    unsigned int instr = 0x0c100004;
+    RegVals expectedRegVals = {
+        .R_rs = 0,
+        .R_rt = 0,
+        .R_rd = 0
+    };
+    DecodedInstr expectedD = {
+        .type = J,
+        .op = 0x3,
+        .regs.j.target = 0x00400010              
+    };
+
+    mips.pc = 0x00400008;
+    testInstructionDecode(instr, expectedD, expectedRegVals);
+
+    printLine("passed");
+}
+
 void testInstructionDecode(unsigned int instruction, DecodedInstr expectedD, RegVals expectedRegVals) {
     DecodedInstr actualD;
-    RegVals rVals;
-
+    // the default values are not set so rs is equal to 64 by default - idk why
+    RegVals rVals = { 
+        .R_rs = 0,
+        .R_rt = 0,
+        .R_rd = 0
+    };
+    
     Decode(instruction, &actualD, &rVals);
 
     assertTrue(expectedD.type, actualD.type, "wrong instruction type");
