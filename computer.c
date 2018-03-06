@@ -254,7 +254,7 @@ InstrType findInstructionType ( unsigned short opcode) {
 }
 
 /* Ensure that this instruction is supported based on its opcode, if not exist. */
-void validateInstruction ( int opcode) {
+void validateInstructionOpcode ( int opcode) {
     logInstr("validateInstruction()", opcode);
 
     for(int index = 0; index <= NUM_SUPPORTED_CODES; index++) {
