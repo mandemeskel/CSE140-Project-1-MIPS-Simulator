@@ -217,7 +217,7 @@ void Decode ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
 
     d->op = findOpcode(instr);
     
-    validateInstruction(d->op);
+    validateInstructionOpcode(d->op);
 
     d->type = findInstructionType(d->op);
 
@@ -294,6 +294,8 @@ void decodeRFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
 
     unsigned int funct = instr & FN_AND_OP;
 
+    validateInstructionFunction(funct);
+
     d->regs.r.rs = rs;
     d->regs.r.rt = rt;
     d->regs.r.rd = rd;
@@ -305,6 +307,19 @@ void decodeRFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     rVals->R_rd = mips.registers[rd];
 
     logDecodedInstr(d);
+}
+
+/* Ensure that this instruction is supported based on its ALU function, if not exist. */
+void validateInstructionFunction ( int funct) {
+    logInstr("validateInstructionFunction()", funct);
+
+    for(int index = 0; index <= NUM_SUPPORTED_FUNCTS; index++) {
+
+        if(funct == SUPPORTED_FUNCTIONS[index]) return;
+
+    }
+
+    exit(0);
 }
 
 const unsigned int IMM_AND_OP = 0b00000000000000001111111111111111;
