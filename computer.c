@@ -362,7 +362,7 @@ void RegWrite( DecodedInstr* d, int val, int *changedReg) {
     /* Your code goes here */
 }
 
-const int DEBUGGGING = 1;
+const int DEBUGGGING = 0;
 /* Print out debug messages to terminal. */
 void logMsg ( char * msg) {
     if(DEBUGGGING == 0) return;
