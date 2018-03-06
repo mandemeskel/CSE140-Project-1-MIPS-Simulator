@@ -7,13 +7,14 @@
 #define FALSE 0
 
 void testDecode();
+void testDecodeOnJR();
 void testInstructionDecode(unsigned int, DecodedInstr, RegVals);
 void assertTrue(int, int, char *);
 void printLine(char *);
 
 int main (int argc, char *argv[]) {
     printLine("Running test suite...");
-    
+
     testDecode();
 
     printLine("All tests passed!");
@@ -21,6 +22,14 @@ int main (int argc, char *argv[]) {
 
 void testDecode() {
     printLine("Running decode tests.");
+
+    testDecodeOnJR();
+
+    printLine("Decode tests passed.");
+}
+
+void testDecodeOnJR() {
+    printf("testing on jr $31...");
 
     unsigned int instr_jr = 0x03e00008;
     RegVals expectedRegVals = {
@@ -41,7 +50,7 @@ void testDecode() {
     mips.registers[31] = expectedRegVals.R_rs;
     testInstructionDecode(instr_jr, expectedD, expectedRegVals);
 
-    printLine("Decode tests passed.");
+    printLine("passed");
 }
 
 void testInstructionDecode(unsigned int instruction, DecodedInstr expectedD, RegVals expectedRegVals) {
