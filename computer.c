@@ -4,6 +4,54 @@
 #include <assert.h>
 #include "computer.h"
 
+// supported instructions and there opcode
+const int R_FORMAT_OPCODE = 0,
+  ADDIU_OPCODE = 9,
+  ANDI_OPCODE = 12,
+  ORI_OPCODE = 13,
+  LUI_OPCODE = 15,
+  BEQ_OPCODE = 4,
+  BNE_OPCODE = 5,
+  J_OPCODE = 2,
+  JAL_OPCODE = 3,
+  LW_OPCODE = 35,
+  SW_OPCODE = 43;
+const int NUM_SUPPORTED_CODES = 11;
+const int SUPPORTED_OPCODES[NUM_SUPPORTED_CODES] = {
+  R_FORMAT_OPCODE,
+  ADDIU_OPCODE,
+  ANDI_OPCODE,
+  ORI_OPCODE,
+  LUI_OPCODE,
+  BEQ_OPCODE,
+  BNE_OPCODE,
+  J_OPCODE,
+  JAL_OPCODE,
+  LW_OPCODE,
+  SW_OPCODE
+};
+
+// supported instructions and there function codes
+const int ADDU_FUNCT = 33,
+  SUBU_FUNCT = 35,
+  SLL_FUNCT = 0,
+  SRL_FUNCT = 2,
+  AND_FUNCT = 36,
+  OR_FUNCT = 37,
+  SLT_FUNCT = 42,
+  JR_FUNCT = 8;
+const int NUM_SUPPORTED_FUNCTS = 8;
+const int SUPPORTED_FUNCTIONS[NUM_SUPPORTED_CODES] = {
+  ADDU_FUNCT,
+  SUBU_FUNCT,
+  SLL_FUNCT,
+  SRL_FUNCT,
+  AND_FUNCT,
+  OR_FUNCT,
+  SLT_FUNCT,
+  JR_FUNCT
+};
+
 /*
  *  Return an initialized computer with the stack pointer set to the
  *  address of the end of data memory, the remaining registers initialized
@@ -168,6 +216,9 @@ void Decode ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     logInstr("Decode()", instr);
 
     d->op = findOpcode(instr);
+    
+    validateInstruction(d->op);
+
     d->type = findInstructionType(d->op);
 
     if (d->type == R) 
@@ -200,6 +251,19 @@ InstrType findInstructionType ( unsigned short opcode) {
     if (opcode == 0) return R;
     if (opcode == 2 || opcode == 3) return J;
     return I;
+}
+
+/* Ensure that this instruction is supported based on its opcode, if not exist. */
+void validateInstruction ( int opcode) {
+    logInstr("validateInstruction()", opcode);
+
+    for(int index = 0; index <= NUM_SUPPORTED_CODES; index++) {
+
+        if(opcode == SUPPORTED_OPCODES[index]) return;
+
+    }
+
+    exit(0);
 }
 
 const unsigned int RS_AND_OP = 0b00000011111000000000000000000000;
