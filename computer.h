@@ -62,6 +62,8 @@ InstrType findInstructionType(unsigned short);
 void decodeRFormat(unsigned int, DecodedInstr*, RegVals*);
 void decodeIFormat(unsigned int, DecodedInstr*, RegVals*);
 int signExtendImmediate(int);
+int signExtendBranchAddress(int);
+int isBranch(int);
 void decodeJFormat(unsigned int, DecodedInstr*, RegVals*);
 int signExtendAddress(int address);
 

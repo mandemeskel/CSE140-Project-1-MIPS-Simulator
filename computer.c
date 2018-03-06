@@ -256,7 +256,11 @@ void decodeIFormat ( unsigned int instr, DecodedInstr* d, RegVals* rVals) {
     rt = rt >> RT_BIT_START_LOCATION;
     
     int imm = instr & IMM_AND_OP;
-    imm = signExtendImmediate(imm);
+
+    if(isBranch(d->op))
+        imm = signExtendBranchAddress(imm);
+    else
+        imm = signExtendImmediate(imm);
 
     d->regs.i.rs = rs;
     d->regs.i.rt = rt;
@@ -280,6 +284,23 @@ int signExtendImmediate(int imm) {
     if(lastBit == 0) return imm;
 
     return imm | IMM_SIGN_EXTENDER;
+}
+
+/* Sign extends an immediate for use by branch instruction. */
+int signExtendBranchAddress ( int imm) {
+    logInstr("signExtendBranchAddress()", imm);
+    assert(imm <= 65535); // highest number a 16 bit immediate could be
+
+    imm = imm << 2;
+    imm += 4;
+    imm += mips.pc;
+
+    return imm;
+}
+
+/* Returns true if this is a branch instruction beq or bne. */
+int isBranch ( int opcode) {
+    return opcode == 4 || opcode == 5;
 }
 
 const unsigned int TARGET_AND_OP = 0b00000011111111111111111111111111;
@@ -362,7 +383,7 @@ void RegWrite( DecodedInstr* d, int val, int *changedReg) {
     /* Your code goes here */
 }
 
-const int DEBUGGGING = 0;
+const int DEBUGGGING = 1;
 /* Print out debug messages to terminal. */
 void logMsg ( char * msg) {
     if(DEBUGGGING == 0) return;
