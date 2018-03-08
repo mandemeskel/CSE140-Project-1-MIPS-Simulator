@@ -4,8 +4,8 @@ testExecute : helper.o execute.o decode.o computer.o testExecute.o
 testExecute.o : testExecute.c
 	gcc -g -c -Wall testExecute.c
 
-testDecode : helper.o decode.o computer.o testDecode.o
-	gcc -g -Wall -o testDecode testDecode.o computer.o decode.o execute.o helper.o
+testDecode : helper.o decode.o testDecode.o
+	gcc -g -Wall -o testDecode testDecode.o decode.o helper.o
 
 testDecode.o : testDecode.c
 	gcc -g -c -Wall testDecode.c
