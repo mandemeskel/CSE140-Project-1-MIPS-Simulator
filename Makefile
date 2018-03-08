@@ -1,5 +1,5 @@
-testExecute : helper.o execute.o decode.o computer.o testExecute.o
-	gcc -g -Wall -o testExecute testExecute.o computer.o decode.o execute.o helper.o
+testExecute : helper.o execute.o testExecute.o
+	gcc -g -Wall -o testExecute testExecute.o execute.o helper.o
 
 testExecute.o : testExecute.c
 	gcc -g -c -Wall testExecute.c
@@ -10,8 +10,8 @@ testDecode : helper.o decode.o testDecode.o
 testDecode.o : testDecode.c
 	gcc -g -c -Wall testDecode.c
 
-sim : execute.o helper.o decode.o computer.o sim.o
-	gcc -g -Wall -o sim sim.o computer.o decode.o execute.o helper.o
+sim : helper.o updatepc.o execute.o decode.o computer.o sim.o
+	gcc -g -Wall -o sim sim.o computer.o decode.o execute.o updatepc.o helper.o
 
 sim.o : computer.h sim.c
 	gcc -g -c -Wall sim.c
@@ -24,6 +24,9 @@ decode.o : decode.c decode.h
 
 execute.o : execute.c execute.h
 	gcc -g -c -Wall execute.c
+
+updatepc.o : updatepc.c updatepc.h
+	gcc -g -c -Wall updatepc.c
 
 helper.o : helper.c helper.h
 	gcc -g -c -Wall helper.c
