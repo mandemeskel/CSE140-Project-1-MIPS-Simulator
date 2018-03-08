@@ -171,16 +171,6 @@ void PrintInstruction ( DecodedInstr* d) {
     /* Your code goes here */
 }
 
-/* 
- * Update the program counter based on the current instruction. For
- * instructions other than branches and jumps, for example, the PC
- * increments by 4 (which we have provided).
- */
-void UpdatePC ( DecodedInstr* d, int val) {
-    mips.pc+=4;
-    /* Your code goes here */
-}
-
 /*
  * Perform memory load or store. Place the address of any updated memory 
  * in *changedMem, otherwise put -1 in *changedMem. Return any memory value 
