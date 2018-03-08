@@ -18,8 +18,4 @@ int isBranch(int);
 void decodeJFormat(unsigned int, DecodedInstr*, RegVals*);
 int signExtendAddress(int address);
 
-void logMsg(char *);
-void logInstr(char *, unsigned int);
-void logDecodedInstr(DecodedInstr*);
-
 #endif
