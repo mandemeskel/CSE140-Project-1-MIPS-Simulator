@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 #include "helper.h"
 #include "computer.h"
-
-#define TRUE 1
-#define FALSE 0
 
 void testDecode();
 void testDecodeOnJR();
@@ -15,7 +11,6 @@ void testDecodeOnJal();
 void testDecodeOnXor();
 void testDecodeOnSb();
 void testInstructionDecode(unsigned int, DecodedInstr, RegVals);
-void assertTrue(int, int, char *);
 void printLine(char *);
 
 int main (int argc, char *argv[]) {
@@ -215,10 +210,4 @@ void testInstructionDecode(unsigned int instruction, DecodedInstr expectedD, Reg
     assertTrue(expectedRegVals.R_rs, rVals.R_rs, "wrong rs value");
     assertTrue(expectedRegVals.R_rt, rVals.R_rt, "wrong rt value");
     assertTrue(expectedRegVals.R_rd, rVals.R_rd, "wrong rd value");
-}
-
-void assertTrue(int expected, int actual, char * msg) {
-    if(expected == actual) return;
-    printf("%s, expected: %d actual: %d \n", msg, expected, actual);
-    assert(FALSE);
 }

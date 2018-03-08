@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "functional": "c",
-        "decode.h": "c"
+        "decode.h": "c",
+        "helper.h": "c"
     }
 }

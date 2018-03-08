@@ -1,5 +1,20 @@
 #include "helper.h"
 #include <stdio.h>
+#include <assert.h>
+
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+void assertTrue(int expected, int actual, char * msg) {
+    if(expected == actual) return;
+    printf("%s, expected: %d actual: %d \n", msg, expected, actual);
+    assert(FALSE);
+}
 
 const int DEBUGGGING = 1;
 /* Print out debug messages to terminal. */
