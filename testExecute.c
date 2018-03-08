@@ -7,6 +7,7 @@
 void testExecuteAdd();
 void testExecuteSub();
 void testExecuteSll();
+void testExecuteSrl();
 void runTest(DecodedInstr *, RegVals *, int);
 
 int main (int argc, char *argv[]) {
@@ -15,6 +16,7 @@ int main (int argc, char *argv[]) {
     testExecuteAdd();
     testExecuteSub();
     testExecuteSll();
+    testExecuteSrl();
 
     printLine("Finished running tests.");
 }
@@ -75,6 +77,28 @@ void testExecuteSll() {
         .regs.r.rt = 13,
         .regs.r.shamt = shamt,
         .regs.r.funct = SLL_FUNCT
+    };
+    RegVals regVals;
+
+    mips.registers[dInst.regs.r.rd] = 0;
+    mips.registers[dInst.regs.r.rs] = 0;
+    mips.registers[dInst.regs.r.rt] = rtValues;
+
+    runTest(&dInst, &regVals, expectedVal);
+}
+
+void testExecuteSrl() {
+    printf("test srl $11, $13, 4: 80 >> 4...");
+    int shamt = 4, rtValues = 80;
+    int expectedVal = rtValues >> shamt;
+    DecodedInstr dInst = {
+        .type = R,
+        .op = R_FORMAT_OPCODE,
+        .regs.r.rd = 11,
+        .regs.r.rs = 12,
+        .regs.r.rt = 13,
+        .regs.r.shamt = shamt,
+        .regs.r.funct = SRL_FUNCT
     };
     RegVals regVals;
 
