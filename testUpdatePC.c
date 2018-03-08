@@ -102,11 +102,12 @@ void testExecuteJr() {
     DecodedInstr dInst = {
         .type = R,
         .op = R_FORMAT_OPCODE,
-        .regs.r.rs = expectedPC,
+        .regs.r.rs = 11,
         .regs.r.shamt = 0,
         .regs.r.funct = JR_FUNCT
     };
-
+    
+    mips.registers[dInst.regs.r.rs] = expectedPC;
     mips.pc = START_PC;
     runTest(&dInst, val, expectedPC);
 }
