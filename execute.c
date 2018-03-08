@@ -7,12 +7,12 @@
 
 enum AluOperation {
     ADD_OP = 1,
-    SUB_OP,
-    OR_OP,
-    AND_OP,
-    SLL_OP,
-    SRL_OP,
-    SLT_OP
+    SUB_OP = 2,
+    OR_OP = 3,
+    AND_OP = 4,
+    SLL_OP = 5,
+    SRL_OP = 6,
+    SLT_OP = 7
 };
 
 /* Perform computation needed to execute d, returning computed value */
@@ -20,8 +20,17 @@ int Execute ( DecodedInstr* d, RegVals* rVals) {
     logMsg("Execute()");
     
     int aluOp = getAluOperation(d);
+
+    printf("\naluOp: %d \n", aluOp);
+
     int param1 = getParam1(aluOp, d);
+
+    printf("param1: %d \n", param1);
+    
     int param2 = getParam2(aluOp, d);
+
+    printf("param2: %d \n", param2);
+    
     int val = executeOperation(aluOp, param1, param2);
 
     return val;
@@ -103,36 +112,120 @@ int functionCodeToAluOp (int functionCode) {
 
 /* Returns the first parameter of the ALU operations. */
 int getParam1 (int aluOperation, DecodedInstr* d) {
+    logMsg("getParam1()");
+       
+    if(d->type == R)
+
+        return getRFormatParam1(aluOperation, d);
+
+    else if(d->type == I)
+
+        return getIFormatParam1(aluOperation, d);
+
     return 0;
 }
 
 /* Returns the first parameter of the ALU operations for R format instructions. */
 int getRFormatParam1 (int aluOperation, DecodedInstr* d) {
-    return 0;
+    logMsg("getRFormatParam1()");
+       
+    if(aluOperation == SLL_OP || aluOperation == SRL_OP)
+
+        return mips.registers[d->regs.r.rt];
+    
+    else
+
+        return mips.registers[d->regs.r.rs];
 }
 
 /* Returns the first parameter of the ALU operations for I format instructions. */
 int getIFormatParam1 (int aluOperation, DecodedInstr* d) {
-    return 0;
+    logMsg("getIFormatParam1()");
+       
+    if(d->op == LUI_OPCODE)
+
+        return d->regs.i.addr_or_immed;
+    
+    else
+
+        return mips.registers[d->regs.i.rs];
 }
 
 /* Returns the second parameter of the ALU operations. */
 int getParam2 (int aluOperation, DecodedInstr* d) {
+    logMsg("getParam2()");
+       
+    if(d->type == R)
+
+        return getRFormatParam2(aluOperation, d);
+
+    else if(d->type == I)
+
+        return getIFormatParam2(aluOperation, d);
+
     return 0;
 }
 
 /* Returns the second parameter of the ALU operations for R format instructions. */
 int getRFormatParam2 (int aluOperation, DecodedInstr* d) {
-    return 0;
+    logMsg("getRFormatParam2()");
+       
+    if(aluOperation == SLL_OP || aluOperation == SRL_OP)
+
+        return d->regs.r.shamt;
+    
+    else
+
+        return mips.registers[d->regs.r.rt];
 }
 
 /* Returns the second parameter of the ALU operations for I format instructions. */
 int getIFormatParam2 (int aluOperation, DecodedInstr* d) {
-    return 0;
+    logMsg("getIFormatParam2()");
+       
+    if(d->op == LUI_OPCODE)
+
+        return 16;
+    
+    else if(aluOperation == SUB_OP)
+
+        return mips.registers[d->regs.i.rt];
+    
+    else
+
+        return d->regs.i.addr_or_immed;
 }
 
 /* Executes the ALU operation and returns the value. */
 int executeOperation (int aluOperation, int param1, int param2) {
+    if(aluOperation == ADD_OP)
+
+        return addOp(param1, param2);
+
+    else if(aluOperation == SUB_OP)
+
+        return subOp(param1, param2);
+
+    else if(aluOperation == SLL_OP)
+
+        return sllOp(param1, param2);
+
+    else if(aluOperation == SRL_OP)
+
+        return srlOp(param1, param2);
+
+    else if(aluOperation == AND_OP)
+
+        return andOp(param1, param2);
+
+    else if(aluOperation == OR_OP)
+
+        return orOp(param1, param2);
+
+    else if(aluOperation == SLT_OP)
+
+        return sltOp(param1, param2);
+
     return 0;
 }
 
