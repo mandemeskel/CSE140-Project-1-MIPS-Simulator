@@ -20,10 +20,14 @@ int Execute ( DecodedInstr* d, RegVals* rVals) {
     logMsg("Execute()");
     
     int aluOp = getAluOperation(d);
+    int param1 = getParam1(aluOp, d);
+    int param2 = getParam2(aluOp, d);
+    int val = executeOperation(aluOp, param1, param2);
 
-    return 0;
+    return val;
 }
 
+/* Returns the ALU operation of this instructions. */
 int getAluOperation (DecodedInstr* d) {
     logMsg("getAluOperation()");
 
@@ -95,6 +99,41 @@ int functionCodeToAluOp (int functionCode) {
     }
 
     return -1;
+}
+
+/* Returns the first parameter of the ALU operations. */
+int getParam1 (int aluOperation, DecodedInstr* d) {
+    return 0;
+}
+
+/* Returns the first parameter of the ALU operations for R format instructions. */
+int getRFormatParam1 (int aluOperation, DecodedInstr* d) {
+    return 0;
+}
+
+/* Returns the first parameter of the ALU operations for I format instructions. */
+int getIFormatParam1 (int aluOperation, DecodedInstr* d) {
+    return 0;
+}
+
+/* Returns the second parameter of the ALU operations. */
+int getParam2 (int aluOperation, DecodedInstr* d) {
+    return 0;
+}
+
+/* Returns the second parameter of the ALU operations for R format instructions. */
+int getRFormatParam2 (int aluOperation, DecodedInstr* d) {
+    return 0;
+}
+
+/* Returns the second parameter of the ALU operations for I format instructions. */
+int getIFormatParam2 (int aluOperation, DecodedInstr* d) {
+    return 0;
+}
+
+/* Executes the ALU operation and returns the value. */
+int executeOperation (int aluOperation, int param1, int param2) {
+    return 0;
 }
 
 /* ALU operation for Execute, param1 + param2. */
