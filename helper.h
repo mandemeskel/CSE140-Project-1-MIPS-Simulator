@@ -8,5 +8,6 @@
 void logMsg(char *);
 void logInstr(char *, unsigned int);
 void logDecodedInstr(DecodedInstr*);
+void printLine(char *);
 
 #endif

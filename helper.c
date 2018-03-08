@@ -43,3 +43,7 @@ void logDecodedInstr(DecodedInstr* d) {
 
     }
 }
+
+void printLine(char * msg) {
+    printf("%s \n", msg);
+}

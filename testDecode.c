@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "helper.h"
 #include "computer.h"
 
 #define TRUE 1
@@ -220,8 +221,4 @@ void assertTrue(int expected, int actual, char * msg) {
     if(expected == actual) return;
     printf("%s, expected: %d actual: %d \n", msg, expected, actual);
     assert(FALSE);
-}
-
-void printLine(char * msg) {
-    printf("%s \n", msg);
 }
