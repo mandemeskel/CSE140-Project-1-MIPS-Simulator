@@ -5,7 +5,16 @@
 #include "mips.h"
 #endif
 
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+
 void assertTrue(int, int, char *);
+int testTrue(int, int, char *);
 void logMsg(char *);
 void logInstr(char *, unsigned int);
 void logDecodedInstr(DecodedInstr*);

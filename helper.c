@@ -2,14 +2,6 @@
 #include <stdio.h>
 #include <assert.h>
 
-#ifndef TRUE
-#define TRUE 1
-#endif
-
-#ifndef FALSE
-#define FALSE 0
-#endif
-
 // supported instructions and there opcode
 const int R_FORMAT_OPCODE = 0,
   ADDIU_OPCODE = 9,
@@ -62,6 +54,12 @@ void assertTrue(int expected, int actual, char * msg) {
     if(expected == actual) return;
     printf("%s, expected: %d actual: %d \n", msg, expected, actual);
     assert(FALSE);
+}
+
+int testTrue(int expected, int actual, char * msg) {
+    if(expected == actual) return TRUE;
+    printf("%s, expected: %d actual: %d \n", msg, expected, actual);
+    return FALSE;
 }
 
 const int DEBUGGGING = 1;
