@@ -9,6 +9,7 @@ void testExecuteSub();
 void testExecuteSll();
 void testExecuteSrl();
 void testExecuteAnd();
+void testExecuteOr();
 void runTest(DecodedInstr *, RegVals *, int);
 
 int main (int argc, char *argv[]) {
@@ -19,6 +20,7 @@ int main (int argc, char *argv[]) {
     testExecuteSll();
     testExecuteSrl();
     testExecuteAnd();
+    testExecuteOr();
     
     printLine("Finished running tests.");
 }
@@ -115,6 +117,28 @@ void testExecuteAnd() {
     printf("test and $11, $12, $13: 4 & 5...");
     int rsValue = 4, rtValue = 5;
     int expectedVal = rsValue & rtValue;
+    DecodedInstr dInst = {
+        .type = R,
+        .op = R_FORMAT_OPCODE,
+        .regs.r.rd = 11,
+        .regs.r.rs = 12,
+        .regs.r.rt = 13,
+        .regs.r.shamt = 0,
+        .regs.r.funct = SRL_FUNCT
+    };
+    RegVals regVals;
+
+    mips.registers[dInst.regs.r.rd] = 0;
+    mips.registers[dInst.regs.r.rs] = rsValue;
+    mips.registers[dInst.regs.r.rt] = rtValue;
+
+    runTest(&dInst, &regVals, expectedVal);
+}
+
+void testExecuteOr() {
+    printf("test or $11, $12, $13: 4 | 5...");
+    int rsValue = 4, rtValue = 5;
+    int expectedVal = rsValue | rtValue;
     DecodedInstr dInst = {
         .type = R,
         .op = R_FORMAT_OPCODE,
