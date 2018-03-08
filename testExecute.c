@@ -10,6 +10,7 @@ void testExecuteSll();
 void testExecuteSrl();
 void testExecuteAnd();
 void testExecuteOr();
+void testExecuteLui();
 void runTest(DecodedInstr *, RegVals *, int);
 
 int main (int argc, char *argv[]) {
@@ -21,7 +22,8 @@ int main (int argc, char *argv[]) {
     testExecuteSrl();
     testExecuteAnd();
     testExecuteOr();
-    
+    testExecuteLui();
+
     printLine("Finished running tests.");
 }
 
@@ -153,6 +155,21 @@ void testExecuteOr() {
     mips.registers[dInst.regs.r.rd] = 0;
     mips.registers[dInst.regs.r.rs] = rsValue;
     mips.registers[dInst.regs.r.rt] = rtValue;
+
+    runTest(&dInst, &regVals, expectedVal);
+}
+
+void testExecuteLui() {
+    printf("test lui $11, 4: 4 << 16...");
+    int imm = 4;
+    int expectedVal = imm << 16;
+    DecodedInstr dInst = {
+        .type = I,
+        .op = LUI_OPCODE,
+        .regs.i.rt = 11,
+        .regs.i.addr_or_immed = imm
+    };
+    RegVals regVals;
 
     runTest(&dInst, &regVals, expectedVal);
 }
