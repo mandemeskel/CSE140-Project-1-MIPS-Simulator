@@ -126,7 +126,7 @@ void testExecuteAnd() {
         .regs.r.rs = 12,
         .regs.r.rt = 13,
         .regs.r.shamt = 0,
-        .regs.r.funct = SRL_FUNCT
+        .regs.r.funct = AND_FUNCT
     };
     RegVals regVals;
 
@@ -148,7 +148,7 @@ void testExecuteOr() {
         .regs.r.rs = 12,
         .regs.r.rt = 13,
         .regs.r.shamt = 0,
-        .regs.r.funct = SRL_FUNCT
+        .regs.r.funct = OR_FUNCT
     };
     RegVals regVals;
 
