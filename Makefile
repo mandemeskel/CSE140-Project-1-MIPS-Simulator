@@ -1,3 +1,9 @@
+testUpdatePC : helper.o updatepc.o testUpdatePC.o
+	gcc -g -Wall -o testUpdatePC testUpdatePC.o updatepc.o helper.o
+
+testUpdatePC.o : testUpdatePC.c
+	gcc -g -c -Wall testUpdatePC.c
+
 testExecute : helper.o execute.o testExecute.o
 	gcc -g -Wall -o testExecute testExecute.o execute.o helper.o
 
