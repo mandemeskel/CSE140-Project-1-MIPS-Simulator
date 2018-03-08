@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "helper.h"
-#include "computer.h"
+#include "execute.h"
 
 void testExecuteAdd();
 void testExecuteSub();
@@ -11,6 +11,7 @@ void testExecuteSrl();
 void testExecuteAnd();
 void testExecuteOr();
 void testExecuteLui();
+void testExecuteSlt();
 void runTest(DecodedInstr *, RegVals *, int);
 
 int main (int argc, char *argv[]) {
@@ -23,6 +24,7 @@ int main (int argc, char *argv[]) {
     testExecuteAnd();
     testExecuteOr();
     testExecuteLui();
+    testExecuteSlt();
 
     printLine("Finished running tests.");
 }
@@ -170,6 +172,38 @@ void testExecuteLui() {
         .regs.i.addr_or_immed = imm
     };
     RegVals regVals;
+
+    runTest(&dInst, &regVals, expectedVal);
+}
+
+void testExecuteSlt() {
+    printf("test slt $11, $12, $13: 4 < 5 ? 1 : 0...");
+    int rsValue = 4, rtValue = 5;
+    int expectedVal = rsValue < rtValue;
+    DecodedInstr dInst = {
+        .type = R,
+        .op = R_FORMAT_OPCODE,
+        .regs.r.rd = 11,
+        .regs.r.rs = 12,
+        .regs.r.rt = 13,
+        .regs.r.shamt = 0,
+        .regs.r.funct = SLT_FUNCT
+    };
+    RegVals regVals;
+
+    mips.registers[dInst.regs.r.rd] = 0;
+    mips.registers[dInst.regs.r.rs] = rsValue;
+    mips.registers[dInst.regs.r.rt] = rtValue;
+
+    runTest(&dInst, &regVals, expectedVal);
+
+    printf("test slt $11, $12, $13: 4 < 3 ? 1 : 0...");
+    
+    rtValue = 3;
+    expectedVal = rsValue < rtValue;
+    mips.registers[dInst.regs.r.rd] = 0;
+    mips.registers[dInst.regs.r.rs] = rsValue;
+    mips.registers[dInst.regs.r.rt] = rtValue;
 
     runTest(&dInst, &regVals, expectedVal);
 }
