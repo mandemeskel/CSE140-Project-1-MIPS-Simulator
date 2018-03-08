@@ -2,36 +2,6 @@
 #include "mips.h"
 #endif
 
-typedef enum { R=0, I, J } InstrType;
-
-typedef struct {
-  int rs;
-  int rt;
-  int rd;
-  int shamt;
-  int funct;
-} RRegs;
-
-typedef struct {
-  int rs;
-  int rt;
-  int addr_or_immed;
-} IRegs;
-
-typedef struct {
-  int target;
-} JRegs;
-
-typedef struct {
-  InstrType type;
-  int op;
-  union {
-    RRegs r;
-    IRegs i;
-    JRegs j;
-  } regs;
-} DecodedInstr;
-
 void InitComputer (FILE*, int printingRegisters, int printingMemory,
     int debugging, int interactive);
 void Simulate ();
