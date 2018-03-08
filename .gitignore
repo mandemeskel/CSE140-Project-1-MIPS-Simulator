@@ -38,3 +38,4 @@
 sim
 tests
 testDecode
+testExecute

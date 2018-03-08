@@ -171,12 +171,6 @@ void PrintInstruction ( DecodedInstr* d) {
     /* Your code goes here */
 }
 
-/* Perform computation needed to execute d, returning computed value */
-int Execute ( DecodedInstr* d, RegVals* rVals) {
-    /* Your code goes here */
-  return 0;
-}
-
 /* 
  * Update the program counter based on the current instruction. For
  * instructions other than branches and jumps, for example, the PC
