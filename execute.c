@@ -20,17 +20,8 @@ int Execute ( DecodedInstr* d, RegVals* rVals) {
     logMsg("Execute()");
     
     int aluOp = getAluOperation(d);
-
-    printf("\naluOp: %d \n", aluOp);
-
     int param1 = getParam1(aluOp, d);
-
-    printf("param1: %d \n", param1);
-    
     int param2 = getParam2(aluOp, d);
-
-    printf("param2: %d \n", param2);
-    
     int val = executeOperation(aluOp, param1, param2);
 
     return val;
