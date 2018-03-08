@@ -6,6 +6,7 @@
 
 void testExecuteAdd();
 void testExecuteSub();
+void testExecuteSll();
 void runTest(DecodedInstr *, RegVals *, int);
 
 int main (int argc, char *argv[]) {
@@ -13,8 +14,9 @@ int main (int argc, char *argv[]) {
 
     testExecuteAdd();
     testExecuteSub();
+    testExecuteSll();
 
-    printLine("All execute tests passed!");
+    printLine("Finished running tests.");
 }
 
 void testExecuteAdd() {
@@ -29,11 +31,11 @@ void testExecuteAdd() {
         .regs.r.funct = ADDU_FUNCT
     };
     RegVals regVals;
-    int param1 = 4, param2 = 5;
-    int expectedVal = param1 + param2;
+    int rsValue = 4, rtValue = 5;
+    int expectedVal = rsValue + rtValue;
 
-    mips.registers[dInst.regs.r.rs] = param1;
-    mips.registers[dInst.regs.r.rt] = param2;
+    mips.registers[dInst.regs.r.rs] = rsValue;
+    mips.registers[dInst.regs.r.rt] = rtValue;
     mips.registers[dInst.regs.r.rd] = 0;
 
     runTest(&dInst, &regVals, expectedVal);
@@ -51,12 +53,34 @@ void testExecuteSub() {
         .regs.r.funct = SUBU_FUNCT
     };
     RegVals regVals;
-    int param1 = 4, param2 = 5;
-    int expectedVal = param1 - param2;
+    int rsValue = 4, rtValue = 5;
+    int expectedVal = rsValue - rtValue;
 
     mips.registers[dInst.regs.r.rd] = 0;
-    mips.registers[dInst.regs.r.rs] = param1;
-    mips.registers[dInst.regs.r.rt] = param2;
+    mips.registers[dInst.regs.r.rs] = rsValue;
+    mips.registers[dInst.regs.r.rt] = rtValue;
+
+    runTest(&dInst, &regVals, expectedVal);
+}
+
+void testExecuteSll() {
+    printf("test sll $11, $13, 4: 5 << 4...");
+    int shamt = 4, rtValues = 5;
+    int expectedVal = rtValues << shamt;
+    DecodedInstr dInst = {
+        .type = R,
+        .op = R_FORMAT_OPCODE,
+        .regs.r.rd = 11,
+        .regs.r.rs = 12,
+        .regs.r.rt = 13,
+        .regs.r.shamt = shamt,
+        .regs.r.funct = SLL_FUNCT
+    };
+    RegVals regVals;
+
+    mips.registers[dInst.regs.r.rd] = 0;
+    mips.registers[dInst.regs.r.rs] = 0;
+    mips.registers[dInst.regs.r.rt] = rtValues;
 
     runTest(&dInst, &regVals, expectedVal);
 }
