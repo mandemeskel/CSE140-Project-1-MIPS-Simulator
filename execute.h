@@ -6,7 +6,8 @@
 #endif
 
 int Execute (DecodedInstr*, RegVals*);
-int getAluOperation (DecodedInstr*, RegVals*);
+int getAluOperation (DecodedInstr*);
+int functionCodeToAluOp (int);
 
 int getParam1 (int (int, int), DecodedInstr*);
 int getRFormatParam1 (int (int, int), DecodedInstr*);
@@ -24,7 +25,7 @@ int sllOp (int, int);
 int srlOp (int, int);
 int andOp (int, int);
 int orOp (int, int);
-int sltbOp (int, int);
-int luiOp (int, int);
+int sltOp (int, int);
+// int luiOp (int, int);
 
 #endif
