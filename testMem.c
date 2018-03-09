@@ -17,8 +17,8 @@ int main (int argc, char *argv[]) {
     testExecuteAddu();
     testExecuteSw();
     testExecuteLw();
-    testExecuteInvalid();
-    testExecuteMissAligned();
+    // testExecuteInvalid(); // correctly exists program
+    // testExecuteMissAligned(); // correctly exists program
 
     printLine("Finished running tests.");
 }
@@ -34,7 +34,7 @@ void testExecuteAddu() {
         .regs.r.shamt = 0,
         .regs.r.funct = ADDU_FUNCT
     };
-    int expectedWriteValue = 0, expectedReadValue = -1, expectedChangedMem = 0;
+    int expectedWriteValue = 0, expectedReadValue = -1, expectedChangedMem = -1;
 
     runTest(dInst, expectedWriteValue, expectedReadValue, expectedChangedMem);
 }
@@ -60,7 +60,7 @@ void testExecuteLw() {
     printLine("test lw $11, -4($12)...");
     DecodedInstr dInst = {
         .type = I,
-        .op = SW_OPCODE,
+        .op = LW_OPCODE,
         .regs.i.rt = 11,
         .regs.i.rs = 12,
         .regs.i.addr_or_immed = -4
@@ -69,6 +69,7 @@ void testExecuteLw() {
     int memIndex = (readAddress - START_DATA_ADDRESS)/4;
 
     mips.memory[memIndex] = expectedReadValue;
+    mips.registers[dInst.regs.i.rs] = END_DATA_ADDRESS;
 
     runTest(dInst, expectedWriteValue, expectedReadValue, expectedChangedMem);
 }
@@ -115,10 +116,20 @@ void runTest(DecodedInstr dInst, int expectedWriteValue, int expectedReadValue, 
 
     passed += testTrue(expectedReadValue, memValue, "\t Mem() returned the wrong value");
 
-    int address = getAddress(dInst);
-    int index = addressIntoMemoryIndex(address);
-    int actualValue = mips.memory[index];
-    passed += testTrue(expectedWriteValue, actualValue, "\t Mem() wrote the wrong value into memory");
+    if(dInst.op == SW_OPCODE) {
 
-    printf("PASSED: %d/3 tests \n", passed);
+        int address = getAddress(dInst); 
+        int index = addressIntoMemoryIndex(address);
+        int actualValue = mips.memory[index];
+        passed += testTrue(expectedWriteValue, actualValue, "\t Mem() wrote the wrong value into memory");
+
+        printf("PASSED: %d/3 tests \n", passed);
+
+    } else {
+
+        printf("PASSED: %d/2 tests \n", passed);
+
+    }
+
+    
 }
