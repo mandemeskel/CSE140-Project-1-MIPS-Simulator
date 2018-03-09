@@ -54,6 +54,7 @@ void testExecuteSw() {
     int expectedWriteValue = 10, expectedReadValue = -1, expectedChangedMem = START_DATA_ADDRESS + dInst.regs.i.addr_or_immed;
 
     mips.registers[dInst.regs.i.rs] = START_DATA_ADDRESS;
+    mips.registers[dInst.regs.i.rt] = expectedWriteValue;
 
     runTest(dInst, expectedWriteValue, expectedReadValue, expectedChangedMem);
 }
@@ -104,6 +105,7 @@ void testExecuteMissAligned() {
     int expectedWriteValue = 12, expectedReadValue = -1, expectedChangedMem = -1;
 
     mips.registers[dInst.regs.i.rs] = START_DATA_ADDRESS;
+    mips.registers[dInst.regs.i.rt] = expectedWriteValue;
 
     runTest(dInst, expectedWriteValue, expectedReadValue, expectedChangedMem);
 }
