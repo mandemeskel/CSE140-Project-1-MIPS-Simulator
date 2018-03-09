@@ -16,8 +16,8 @@ testDecode : helper.o decode.o testDecode.o
 testDecode.o : testDecode.c
 	gcc -g -c -Wall testDecode.c
 
-sim : helper.o updatepc.o execute.o decode.o computer.o sim.o
-	gcc -g -Wall -o sim sim.o computer.o decode.o execute.o updatepc.o helper.o
+sim : helper.o mem.o updatepc.o execute.o decode.o computer.o sim.o
+	gcc -g -Wall -o sim sim.o computer.o decode.o execute.o updatepc.o mem.o helper.o
 
 sim.o : computer.h sim.c
 	gcc -g -c -Wall sim.c
@@ -33,6 +33,9 @@ execute.o : execute.c execute.h
 
 updatepc.o : updatepc.c updatepc.h
 	gcc -g -c -Wall updatepc.c
+
+mem.o : mem.c mem.h
+	gcc -g -c -Wall mem.c
 
 helper.o : helper.c helper.h
 	gcc -g -c -Wall helper.c
