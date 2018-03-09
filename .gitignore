@@ -39,3 +39,4 @@ sim
 tests
 testDecode
 testExecute
+testMem
