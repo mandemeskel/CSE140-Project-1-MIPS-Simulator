@@ -1,3 +1,9 @@
+testRegWrite : helper.o mem.o updatepc.o execute.o decode.o computer.o testRegWrite.o
+	gcc -g -Wall -o testRegWrite testRegWrite.o computer.o decode.o execute.o updatepc.o mem.o helper.o
+
+testRegWrite.o : testRegWrite.c
+	gcc -g -c -Wall testRegWrite.c
+
 testMem : helper.o mem.o testMem.o
 	gcc -g -Wall -o testMem testMem.o mem.o helper.o
 

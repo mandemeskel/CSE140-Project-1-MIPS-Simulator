@@ -41,3 +41,4 @@ testDecode
 testExecute
 testUpdatePC
 testMem
+testRegWrite
