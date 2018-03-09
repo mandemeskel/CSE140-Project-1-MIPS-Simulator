@@ -178,10 +178,37 @@ void PrintInstruction ( DecodedInstr* d) {
  * otherwise put -1 in *changedReg.
  */
 void RegWrite( DecodedInstr* d, int val, int *changedReg) {
-    /* Your code goes here */
+    logMsg("RegWrite()");
+
+    if(instructionWritesToRegisters(*d) == FALSE) return;
+
+    if(d->op == R_FORMAT_OPCODE) {
+
+        *changedReg = d->regs.r.rd;
+
+    } else if(d->type == I) {
+
+        *changedReg = d->regs.i.rt;
+
+    } else {
+
+        return;
+
+    }
+
+    mips.registers[*changedReg] = val;
+
 }
 
 /* Checks if the instruction writes to a register. */
 int instructionWritesToRegisters(DecodedInstr d) {
-    return FALSE;
+    int isRFormat = d.op == R_FORMAT_OPCODE,
+        isLw = d.op == LW_OPCODE,
+        isAddiu = d.op == ADDIU_OPCODE,
+        isAndi = d.op == ANDI_OPCODE,
+        isOri = d.op == ORI_OPCODE,
+        isLui = d.op == LUI_OPCODE;
+    int writesToRegister = isRFormat + isLw + isAddiu + isAndi + isOri + isLui;
+
+    return writesToRegister;
 }
