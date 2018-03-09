@@ -171,21 +171,6 @@ void PrintInstruction ( DecodedInstr* d) {
     /* Your code goes here */
 }
 
-/*
- * Perform memory load or store. Place the address of any updated memory 
- * in *changedMem, otherwise put -1 in *changedMem. Return any memory value 
- * that is read, otherwise return -1. 
- *
- * Remember that we're mapping MIPS addresses to indices in the mips.memory 
- * array. mips.memory[0] corresponds with address 0x00400000, mips.memory[1] 
- * with address 0x00400004, and so forth.
- *
- */
-int Mem( DecodedInstr* d, int val, int *changedMem) {
-    /* Your code goes here */
-  return 0;
-}
-
 /* 
  * Write back to register. If the instruction modified a register--
  * (including jal, which modifies $ra) --

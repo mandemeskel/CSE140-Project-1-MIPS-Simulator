@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <assert.h>
 
+// turn on logs
+const int DEBUGGGING = FALSE;
+
 // supported instructions and there opcode
 const int R_FORMAT_OPCODE = 0,
   ADDIU_OPCODE = 9,
@@ -50,6 +53,11 @@ const int SUPPORTED_FUNCTIONS[NUM_SUPPORTED_FUNCTS] = {
   JR_FUNCT
 };
 
+// the limits of data addresses in memory
+const int START_DATA_ADDRESS = 0x00401000;
+const int END_DATA_ADDRESS = 0x404000;
+const int WORD_SIZE = 4;
+
 void assertTrue(int expected, int actual, char * msg) {
     if(expected == actual) return;
     printf("%s, expected: %d actual: %d \n", msg, expected, actual);
@@ -62,7 +70,6 @@ int testTrue(int expected, int actual, char * msg) {
     return FALSE;
 }
 
-const int DEBUGGGING = 1;
 /* Print out debug messages to terminal. */
 void logMsg ( char * msg) {
     if(DEBUGGGING == 0) return;
