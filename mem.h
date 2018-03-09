@@ -6,6 +6,7 @@
 #endif
 
 int Mem(DecodedInstr*, int, int *);
+int instructionUsesMem(DecodedInstr);
 int getAddress(DecodedInstr);
 int addressIntoMemoryIndex(int);
 void validateMemoryAddressExists(int);

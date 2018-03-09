@@ -13,8 +13,35 @@
  *
  */
 int Mem( DecodedInstr* d, int val, int *changedMem) {
-    /* Your code goes here */
-  return 0;
+    logMsg("Mem()");
+
+    if(instructionUsesMem(*d) == FALSE) return -1;
+
+    int address = getAddress(*d);
+    
+    validateMemoryAddressExists(address);
+    validateMemoryAddressWordAligned(address);
+
+    int index = addressIntoMemoryIndex(address);
+
+    if(d->op == SW_OPCODE) {
+
+        mips.memory[index] = d->regs.i.rt;
+        *changedMem = address;
+        return -1;
+
+    } else if(d->op == LW_OPCODE) {
+
+        return mips.memory[index];
+
+    }
+
+    return -1;
+}
+
+/* Check if this instruction writes or reads from memory. */
+int instructionUsesMem(DecodedInstr dInstr) {
+    return FALSE;
 }
 
 /* Returns the memory address associated with the instruction. */
