@@ -39,4 +39,5 @@ sim
 tests
 testDecode
 testExecute
+testUpdatePC
 testMem

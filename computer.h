@@ -10,6 +10,14 @@
 #include "execute.h"
 #endif
 
+#ifndef UPDATEPC
+#include "updatepc.h"
+#endif
+
+#ifndef MEM
+#include "mem.h"
+#endif
+
 void InitComputer (FILE*, int printingRegisters, int printingMemory,
     int debugging, int interactive);
 void Simulate ();
@@ -19,7 +27,6 @@ unsigned int endianSwap(unsigned int);
 void PrintInfo (int changedReg, int changedMem);
 unsigned int Fetch (int);
 
-int Mem(DecodedInstr*, int, int *);
 void RegWrite(DecodedInstr*, int, int *);
 void PrintInstruction (DecodedInstr*);
 

@@ -48,4 +48,11 @@ extern const int NUM_SUPPORTED_FUNCTS;
 extern const int SUPPORTED_FUNCTIONS[8];
 #endif
 
+#ifndef START_DATA_ADDRESS
+// the limits of data addresses in memory
+extern const int START_DATA_ADDRESS;
+extern const int END_DATA_ADDRESS;
+extern const int WORD_SIZE;
+#endif
+
 #endif
