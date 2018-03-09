@@ -29,7 +29,7 @@ int main (int argc, char *argv[]) {
     testExecuteSlt();
     testExecuteSw();
     testExecuteLw();
-    
+
     printLine("Finished running tests.");
 }
 
@@ -232,10 +232,7 @@ void testExecuteLw() {
         .regs.i.addr_or_immed = 4
     };
     int expectedVal = 9;
-    int expectedReg = -1;
-
-    mips.registers[dInst.regs.i.rs] = 0;
-    mips.registers[dInst.regs.i.rt] = expectedVal;
+    int expectedReg = 11;
 
     runTest(dInst, expectedVal, expectedReg);
 }
