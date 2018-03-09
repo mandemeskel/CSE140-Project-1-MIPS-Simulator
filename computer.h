@@ -2,6 +2,10 @@
 #include "mips.h"
 #endif
 
+#ifndef HELPER
+#include "helper.h"
+#endif
+
 #ifndef DECODE
 #include "decode.h"
 #endif
@@ -28,6 +32,8 @@ void PrintInfo (int changedReg, int changedMem);
 unsigned int Fetch (int);
 
 void RegWrite(DecodedInstr*, int, int *);
+int instructionWritesToRegisters(DecodedInstr);
+
 void PrintInstruction (DecodedInstr*);
 
 /*Globally accessible Computer variable*/
