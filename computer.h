@@ -21,7 +21,6 @@ unsigned int Fetch (int);
 
 int Mem(DecodedInstr*, int, int *);
 void RegWrite(DecodedInstr*, int, int *);
-void UpdatePC(DecodedInstr*, int);
 void PrintInstruction (DecodedInstr*);
 
 /*Globally accessible Computer variable*/
