@@ -1,3 +1,9 @@
+testMem : helper.o mem.o testMem.o
+	gcc -g -Wall -o testMem testMem.o mem.o helper.o
+
+testMem.o : testMem.c
+	gcc -g -c -Wall testMem.c
+
 testUpdatePC : helper.o updatepc.o testUpdatePC.o
 	gcc -g -Wall -o testUpdatePC testUpdatePC.o updatepc.o helper.o
 
