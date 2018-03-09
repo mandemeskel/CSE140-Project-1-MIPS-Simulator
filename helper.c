@@ -50,6 +50,11 @@ const int SUPPORTED_FUNCTIONS[NUM_SUPPORTED_FUNCTS] = {
   JR_FUNCT
 };
 
+// the limits of data addresses in memory
+const int START_DATA_ADDRESS = 0x00401000;
+const int END_DATA_ADDRESS = 0x00403fff;
+const int WORD_SIZE = 4;
+
 void assertTrue(int expected, int actual, char * msg) {
     if(expected == actual) return;
     printf("%s, expected: %d actual: %d \n", msg, expected, actual);

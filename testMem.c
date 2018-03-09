@@ -4,9 +4,6 @@
 #include "helper.h"
 #include "mem.h"
 
-const int START_DATA_ADDRESS = 0x00401000;
-const int END_DATA_ADDRESS = 0x00403fff;
-
 void testExecuteAddu();
 void testExecuteSw();
 void testExecuteLw();
@@ -119,7 +116,8 @@ void runTest(DecodedInstr dInst, int expectedWriteValue, int expectedReadValue, 
     passed += testTrue(expectedReadValue, memValue, "\t Mem() returned the wrong value");
 
     int address = getAddress(dInst);
-    int actualValue = mips.memory[addressIntoMemoryIndex(address)];
+    int index = addressIntoMemoryIndex(address);
+    int actualValue = mips.memory[index];
     passed += testTrue(expectedWriteValue, actualValue, "\t Mem() wrote the wrong value into memory");
 
     printf("PASSED: %d/3 tests \n", passed);
