@@ -180,3 +180,8 @@ void PrintInstruction ( DecodedInstr* d) {
 void RegWrite( DecodedInstr* d, int val, int *changedReg) {
     /* Your code goes here */
 }
+
+/* Checks if the instruction writes to a register. */
+int instructionWritesToRegisters(DecodedInstr d) {
+    return FALSE;
+}
