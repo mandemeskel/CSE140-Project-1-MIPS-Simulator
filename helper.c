@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <assert.h>
 
+// turn on logs
+const int DEBUGGGING = FALSE;
+
 // supported instructions and there opcode
 const int R_FORMAT_OPCODE = 0,
   ADDIU_OPCODE = 9,
@@ -67,7 +70,6 @@ int testTrue(int expected, int actual, char * msg) {
     return FALSE;
 }
 
-const int DEBUGGGING = 1;
 /* Print out debug messages to terminal. */
 void logMsg ( char * msg) {
     if(DEBUGGGING == 0) return;
