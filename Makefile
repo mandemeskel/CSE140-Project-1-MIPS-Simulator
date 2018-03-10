@@ -1,3 +1,6 @@
+sim : helper.o mem.o updatepc.o execute.o decode.o computer.o sim.o
+	gcc -g -Wall -o sim sim.o computer.o decode.o execute.o updatepc.o mem.o helper.o
+
 testRegWrite : helper.o mem.o updatepc.o execute.o decode.o computer.o testRegWrite.o
 	gcc -g -Wall -o testRegWrite testRegWrite.o computer.o decode.o execute.o updatepc.o mem.o helper.o
 
@@ -28,9 +31,6 @@ testDecode : helper.o decode.o testDecode.o
 testDecode.o : testDecode.c
 	gcc -g -c -Wall testDecode.c
 
-sim : helper.o mem.o updatepc.o execute.o decode.o computer.o sim.o
-	gcc -g -Wall -o sim sim.o computer.o decode.o execute.o updatepc.o mem.o helper.o
-
 sim.o : computer.h sim.c
 	gcc -g -c -Wall sim.c
 
@@ -53,4 +53,4 @@ helper.o : helper.c helper.h
 	gcc -g -c -Wall helper.c
 
 clean:
-	\rm -rf *.o sim testDecode
+	\rm -rf *.o sim testDecode testExecute testMem testRegWrite testUpdatePC
