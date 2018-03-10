@@ -224,6 +224,47 @@ void PrintInstruction ( DecodedInstr* d) {
 }
 
 char * getInstructionName ( DecodedInstr d) {
+    if(d.op == ADDIU_OPCODE)
+        return "addiu";
+    else if(d.op == ANDI_OPCODE)
+        return "andi";
+    else if(d.op == ORI_OPCODE)
+        return "ori";
+    else if(d.op == LUI_OPCODE)
+        return "lui";
+    else if(d.op == BEQ_OPCODE)
+        return "beq";
+    else if(d.op == BNE_OPCODE)
+        return "bne";
+    else if(d.op == J_OPCODE)
+        return "j";
+    else if(d.op == JAL_OPCODE)
+        return "jal";
+    else if(d.op == LW_OPCODE)
+        return "lw";
+    else if(d.op == SW_OPCODE)
+        return "sw";
+    else if(d.op == R_FORMAT_OPCODE) {
+
+        if(d.regs.r.funct == ADDU_FUNCT)
+            return "addu";
+        else if(d.regs.r.funct == SUBU_FUNCT)
+            return "subu";
+        else if(d.regs.r.funct == SLL_FUNCT)
+            return "sll";
+        else if(d.regs.r.funct == SRL_FUNCT)
+            return "srl";
+        else if(d.regs.r.funct == AND_FUNCT)
+            return "and";
+        else if(d.regs.r.funct == OR_FUNCT)
+            return "or";
+        else if(d.regs.r.funct == SLT_FUNCT)
+            return "slt";
+        else if(d.regs.r.funct == JR_FUNCT)
+            return "jr";
+        
+    }
+
     return "inop";
 }
 
