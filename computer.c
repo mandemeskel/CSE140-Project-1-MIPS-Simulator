@@ -55,7 +55,7 @@ unsigned int endianSwap(unsigned int i) {
 void Simulate () {
     char s[40];  /* used for handling interactive input */
     unsigned int instr;
-    int changedReg=-1, changedMem=-1, val;
+    int changedReg=-1, changedMem=-1, val, loadedVal;
     DecodedInstr d;
     
     /* Initialize the PC to the start of the code section */
@@ -97,7 +97,9 @@ void Simulate () {
 	 * otherwise put -1 in *changedMem. 
 	 * Return any memory value that is read, otherwise return -1.
          */
-        val = Mem(&d, val, &changedMem);
+        loadedVal = Mem(&d, val, &changedMem);
+
+        if(d.op == LW_OPCODE) val = loadedVal;
 
         /* 
 	 * Write back to register. If the instruction modified a register--
