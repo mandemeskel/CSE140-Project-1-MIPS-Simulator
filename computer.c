@@ -168,7 +168,112 @@ unsigned int Fetch ( int addr) {
  *  followed by a newline.
  */
 void PrintInstruction ( DecodedInstr* d) {
-    /* Your code goes here */
+    char * instName = getInstructionName(*d);
+    int arg1, arg2, arg3;
+
+    if(d->op == R_FORMAT_OPCODE) {
+
+        arg1 = d->regs.r.rd;
+        arg2 = d->regs.r.rt;
+
+        if(d->regs.r.funct == SLL_FUNCT || d->regs.r.funct == SRL_FUNCT) {
+
+            arg3 = d->regs.r.shamt;
+            printf("%s\t$%d, $%d, %d\n", instName, arg1, arg2, arg3);
+
+        } else if(d->regs.r.funct == JR_FUNCT) {
+
+            arg1 = d->regs.r.rs;
+            printf("%s\t$%d\n", instName, arg1);
+
+        } else {
+
+            arg3 = d->regs.r.rs;
+            printf("%s\t$%d, $%d, $%d\n", instName, arg1, arg2, arg3);
+
+        }
+
+    } else if(d->type == J) {
+
+        arg1 = d->regs.j.target;
+        printf("%s\t0x00%x\n", instName, arg1);
+
+    } else {
+
+        arg1 = d->regs.i.rs;
+        arg2 = d->regs.i.rt;
+        arg3 = d->regs.i.addr_or_immed;
+
+        if(d->op == BNE_OPCODE || d->op == BEQ_OPCODE) {
+
+            printf("%s\t$%d, $%d, 0x00%x\n", instName, arg1, arg2, arg3);
+
+        } else if(d->op == ORI_OPCODE || d->op == ANDI_OPCODE) {
+
+            printf("%s\t$%d, $%d, 0x00%x\n", instName, arg1, arg2, arg3) ;
+
+        } else if(d->op == SW_OPCODE || d->op == LW_OPCODE) {
+
+            printf("%s\t$%d, %d($%d)\n", instName, arg1, arg3, arg2);
+
+        } else if(d->op == LUI_OPCODE) {
+
+            printf("%s\t$%d, 0x00%x\n", instName, arg2, arg3);
+
+        } else if(d->op == ADDIU_OPCODE) {
+
+            printf("%s\t$%d, $%d, %d\n", instName, arg1, arg2, arg3);
+            
+        }
+
+    }
+    
+}
+
+/* Returns the name of the instruciton. */
+char * getInstructionName ( DecodedInstr d) {
+    if(d.op == ADDIU_OPCODE)
+        return "addiu";
+    else if(d.op == ANDI_OPCODE)
+        return "andi";
+    else if(d.op == ORI_OPCODE)
+        return "ori";
+    else if(d.op == LUI_OPCODE)
+        return "lui";
+    else if(d.op == BEQ_OPCODE)
+        return "beq";
+    else if(d.op == BNE_OPCODE)
+        return "bne";
+    else if(d.op == J_OPCODE)
+        return "j";
+    else if(d.op == JAL_OPCODE)
+        return "jal";
+    else if(d.op == LW_OPCODE)
+        return "lw";
+    else if(d.op == SW_OPCODE)
+        return "sw";
+    else if(d.op == R_FORMAT_OPCODE) {
+
+        if(d.regs.r.funct == ADDU_FUNCT)
+            return "addu";
+        else if(d.regs.r.funct == SUBU_FUNCT)
+            return "subu";
+        else if(d.regs.r.funct == SLL_FUNCT)
+            return "sll";
+        else if(d.regs.r.funct == SRL_FUNCT)
+            return "srl";
+        else if(d.regs.r.funct == AND_FUNCT)
+            return "and";
+        else if(d.regs.r.funct == OR_FUNCT)
+            return "or";
+        else if(d.regs.r.funct == SLT_FUNCT)
+            return "slt";
+        else if(d.regs.r.funct == JR_FUNCT)
+            return "jr";
+        
+    }
+
+    return "inop";
 }
 
 /* 
