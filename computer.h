@@ -36,9 +36,6 @@ int instructionWritesToRegisters(DecodedInstr);
 
 void PrintInstruction (DecodedInstr*);
 char * getInstructionName (DecodedInstr);
-int getInstructionArg1 (DecodedInstr);
-int getInstructionArg2 (DecodedInstr);
-int getInstructionArg3 (DecodedInstr);
 
 /*Globally accessible Computer variable*/
 Computer mips;

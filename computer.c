@@ -171,39 +171,46 @@ void PrintInstruction ( DecodedInstr* d) {
     char * instName = getInstructionName(*d);
     int arg1, arg2, arg3;
 
-    arg1 = getInstructionArg1(*d);
-    arg2 = getInstructionArg2(*d);
-    arg3 = getInstructionArg3(*d);
-
     if(d->op == R_FORMAT_OPCODE) {
+
+        arg1 = d->regs.r.rd;
+        arg2 = d->regs.r.rt;
 
         if(d->regs.r.funct == SLL_FUNCT || d->regs.r.funct == SRL_FUNCT) {
 
+            arg3 = d->regs.r.shamt;
             printf("%s\t$%d, $%d, %d\n", instName, arg1, arg2, arg3);
 
         } else if(d->regs.r.funct == JR_FUNCT) {
 
+            arg1 = d->regs.r.rs;
             printf("%s\t$%d\n", instName, arg1);
 
         } else {
 
+            arg3 = d->regs.r.rs;
             printf("%s\t$%d, $%d, $%d\n", instName, arg1, arg2, arg3);
 
         }
 
     } else if(d->type == J) {
 
-        printf("%s\t0x%x\n", instName, arg1);
+        arg1 = d->regs.j.target;
+        printf("%s\t0x00%x\n", instName, arg1);
 
     } else {
 
+        arg1 = d->regs.i.rs;
+        arg2 = d->regs.i.rt;
+        arg3 = d->regs.i.addr_or_immed;
+
         if(d->op == BNE_OPCODE || d->op == BEQ_OPCODE) {
 
-            printf("%s\t$%d, $%d, 0x%x\n", instName, arg1, arg2, arg3);
+            printf("%s\t$%d, $%d, 0x00%x\n", instName, arg1, arg2, arg3);
 
         } else if(d->op == ORI_OPCODE || d->op == ANDI_OPCODE) {
 
-            printf("%s\t$%d, $%d, 0x%x\n", instName, arg1, arg2, arg3) ;
+            printf("%s\t$%d, $%d, 0x00%x\n", instName, arg1, arg2, arg3) ;
 
         } else if(d->op == SW_OPCODE || d->op == LW_OPCODE) {
 
@@ -211,7 +218,7 @@ void PrintInstruction ( DecodedInstr* d) {
 
         } else if(d->op == LUI_OPCODE) {
 
-            printf("%s\t$%d, 0x%x\n", instName, arg2, arg3);
+            printf("%s\t$%d, 0x00%x\n", instName, arg2, arg3);
 
         } else if(d->op == ADDIU_OPCODE) {
 
@@ -223,6 +230,7 @@ void PrintInstruction ( DecodedInstr* d) {
     
 }
 
+/* Returns the name of the instruciton. */
 char * getInstructionName ( DecodedInstr d) {
     if(d.op == ADDIU_OPCODE)
         return "addiu";
@@ -266,18 +274,6 @@ char * getInstructionName ( DecodedInstr d) {
     }
 
     return "inop";
-}
-
-int getInstructionArg1 ( DecodedInstr d) {
-    return -1;
-}
-
-int getInstructionArg2 ( DecodedInstr d) {
-    return -1;
-}
-
-int getInstructionArg3 ( DecodedInstr d) {
-    return -1;
 }
 
 /* 
