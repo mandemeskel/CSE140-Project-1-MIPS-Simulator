@@ -168,7 +168,75 @@ unsigned int Fetch ( int addr) {
  *  followed by a newline.
  */
 void PrintInstruction ( DecodedInstr* d) {
-    /* Your code goes here */
+    char * instName = getInstructionName(*d);
+    int arg1, arg2, arg3;
+
+    arg1 = getInstructionArg1(*d);
+    arg2 = getInstructionArg2(*d);
+    arg3 = getInstructionArg3(*d);
+
+    if(d->op == R_FORMAT_OPCODE) {
+
+        if(d->regs.r.funct == SLL_FUNCT || d->regs.r.funct == SRL_FUNCT) {
+
+            printf("%s\t$%d, $%d, %d\n", instName, arg1, arg2, arg3);
+
+        } else if(d->regs.r.funct == JR_FUNCT) {
+
+            printf("%s\t$%d\n", instName, arg1);
+
+        } else {
+
+            printf("%s\t$%d, $%d, $%d\n", instName, arg1, arg2, arg3);
+
+        }
+
+    } else if(d->type == J) {
+
+        printf("%s\t0x%x\n", instName, arg1);
+
+    } else {
+
+        if(d->op == BNE_OPCODE || d->op == BEQ_OPCODE) {
+
+            printf("%s\t$%d, $%d, 0x%x\n", instName, arg1, arg2, arg3);
+
+        } else if(d->op == ORI_OPCODE || d->op == ANDI_OPCODE) {
+
+            printf("%s\t$%d, $%d, 0x%x\n", instName, arg1, arg2, arg3) ;
+
+        } else if(d->op == SW_OPCODE || d->op == LW_OPCODE) {
+
+            printf("%s\t$%d, %d($%d)\n", instName, arg1, arg3, arg2);
+
+        } else if(d->op == LUI_OPCODE) {
+
+            printf("%s\t$%d, 0x%x\n", instName, arg2, arg3);
+
+        } else if(d->op == ADDIU_OPCODE) {
+
+            printf("%s\t$%d, $%d, %d\n", instName, arg1, arg2, arg3);
+            
+        }
+
+    }
+    
+}
+
+char * getInstructionName ( DecodedInstr d) {
+    return "inop";
+}
+
+int getInstructionArg1 ( DecodedInstr d) {
+    return -1;
+}
+
+int getInstructionArg2 ( DecodedInstr d) {
+    return -1;
+}
+
+int getInstructionArg3 ( DecodedInstr d) {
+    return -1;
 }
 
 /* 
